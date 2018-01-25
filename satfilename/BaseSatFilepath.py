@@ -1,3 +1,4 @@
+from datetime import datetime
 
 class BaseSatFilepath():
     """
@@ -23,6 +24,21 @@ class BaseSatFilepath():
     def basepath(self, region):
         """ returns the directory these products are placed in. """
         return "/srv/imars-objects/modis_aqua_{}/{}/".format(region, self.product_id)
+
+    def match_filename(self, test_string):
+        """
+        returns true if given test_string could be a valid filename for this
+        product. Else returns false.
+        """
+        try:
+            datetime.strptime(test_string, self.filename_fmt)
+            # TODO: other tests for filename validity?
+            return True
+        except:
+            return False
+
+    # TODO: def match_path()
+    # TODO: def match() to dynamically choose match_path or match_filename
 
     def __call__(self, exec_time, region_id):
         """
