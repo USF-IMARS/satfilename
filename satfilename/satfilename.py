@@ -42,44 +42,10 @@ Some general rules/assumptions that summarize behavior here:
 Note the common product directories and the two `geo` directories where a new version was separated out into a new product.
 Filenames in `geo` and `geo_v2` are probably similar, but shoud not be identical.
 """
+
+from satfilename.BaseSatFilepath import BaseSatFilepath
+
 ISO_8601_FMT="%Y-%m-%dT%H:%M:%SZ"
-
-class BaseSatFilepath():
-    """
-    Base constructor for saffilename pathing function.
-    Instantiate with the filename format string and product_id.
-    Calls to instantiations of this class will return the path.
-    """
-    def __init__(self, product_id, filename_fmt):
-        """
-            Parameters
-            --------------
-            filename_fmt : str
-                Filename format string.
-                Supports formatters from datetime.strftime.
-                Example: "%Y-%m-%dT%H:%M:%SZ_my_product.png"
-            product_id : str
-                Unique string to identify the product.
-                Determines which subdir to use within imars-objects/region/.
-        """
-        self.filename_fmt = filename_fmt
-        self.product_id=product_id
-
-    def basepath(self, region):
-        """ returns the directory these products are placed in. """
-        return "/srv/imars-objects/modis_aqua_{}/{}/".format(region, self.product_id)
-
-    def __call__(self, exec_time, region_id):
-        """
-        Parameters
-        ------------
-        exec_time : datetime.datetime
-            execution_date for the product (eg the start_time of the granule)
-        region_id : str
-            region.place_name from regions.<region_name> used to create path
-            within imars-objects.
-        """
-        return self.basepath(region_id) + exec_time.strftime(self.filename_fmt)
 
 """ zipped l1a (myd01) files from OB.DAAC """
 l1a_lac_hdf_bz2 = BaseSatFilepath("l1a_lac_hdf_bz2", "A%Y%j%H%M00.L1A_LAC.x.hdf.bz2")
