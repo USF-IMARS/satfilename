@@ -1,3 +1,7 @@
+# :warning: NOTICE :warning:
+All this junk has been deprecated or moved elsewhere. 
+Do not try to use this and read on at your own risk.
+
 # satfilename
 python module &amp; CLI utility for generating standard satellite product filenames
 
